@@ -1,0 +1,54 @@
+{
+  "definition": {
+    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+    "contentVersion": "1.0.0.0",
+    "triggers": {
+      "Recurrence": {
+        "type": "Recurrence",
+        "recurrence": {
+          "interval": 1,
+          "frequency": "Month",
+          "timeZone": "India Standard Time"
+        }
+      }
+    },
+    "actions": {
+      "Send_email_(V2)": {
+        "type": "ApiConnection",
+        "inputs": {
+          "host": {
+            "connection": {
+              "name": "@parameters('$connections')['gmail-1']['connectionId']"
+            }
+          },
+          "method": "post",
+          "body": {
+            "To": "dhamodharansjs@gmail.com",
+            "Subject": "Welcome\n",
+            "Body": "<p>ARM with azure pipelines.</p>"
+          },
+          "path": "/v2/Mail"
+        },
+        "runAfter": {}
+      }
+    },
+    "outputs": {},
+    "parameters": {
+      "$connections": {
+        "type": "Object",
+        "defaultValue": {}
+      }
+    }
+  },
+  "parameters": {
+    "$connections": {
+      "value": {
+        "gmail-1": {
+          "id": "/subscriptions/225be0b6-6988-4b65-8268-8fec4d0ff5f2/providers/Microsoft.Web/locations/eastus/managedApis/gmail",
+          "connectionId": "/subscriptions/225be0b6-6988-4b65-8268-8fec4d0ff5f2/resourceGroups/EIIM-Logic_App/providers/Microsoft.Web/connections/gmail-1",
+          "connectionName": "gmail-1"
+        }
+      }
+    }
+  }
+}
